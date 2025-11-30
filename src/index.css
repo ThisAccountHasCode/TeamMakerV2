@@ -1,0 +1,68 @@
+:root {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  
+  /* Light Mode Variables */
+  --bg-gradient-start: #fef9c3;
+  --bg-gradient-end: #f8fafc;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-tertiary: #94a3b8;
+  --text-quaternary: #cbd5f5;
+  --surface-header: rgba(255, 255, 255, 0.85);
+  --surface-card: rgba(255, 255, 255, 0.9);
+  --surface-input: #f8fafc;
+  --border-color: #e2e8f0;
+  --input-border: #cbd5f5;
+  --shadow-color: rgba(15, 23, 42, 0.15);
+  --accent-gradient: linear-gradient(135deg, #7c3aed, #ec4899);
+  --accent-hover-shadow: rgba(236, 72, 153, 0.4);
+  --footer-text: #64748b;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.dark {
+  /* Dark Mode Variables */
+  --bg-gradient-start: #1e293b;
+  --bg-gradient-end: #0f172a;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-tertiary: #94a3b8;
+  --text-quaternary: #475569;
+  --surface-header: rgba(30, 41, 59, 0.85);
+  --surface-card: rgba(30, 41, 59, 0.9);
+  --surface-input: #1e293b;
+  --border-color: #334155;
+  --input-border: #475569;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --accent-gradient: linear-gradient(135deg, #8b5cf6, #f472b6);
+  --accent-hover-shadow: rgba(244, 114, 182, 0.4);
+  --footer-text: #94a3b8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, var(--bg-gradient-start), var(--bg-gradient-end) 55%);
+  color: var(--text-primary);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+input,
+button,
+label {
+  font: inherit;
+}
