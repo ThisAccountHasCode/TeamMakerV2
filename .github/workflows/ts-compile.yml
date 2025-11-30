@@ -1,0 +1,57 @@
+name: "TypeScript CI/CD Build"
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  Discover-Projects:
+    runs-on: ubuntu-latest
+    outputs:
+      projects: ${{ steps.list.outputs.projects }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: List TypeScript projects
+        id: list
+        run: |
+          projects=$(python - <<'PY'
+          import json
+          import pathlib
+          root = pathlib.Path('.').resolve()
+          dirs = {
+              str(pkg.parent.relative_to(root)).replace('\\', '/')
+              for pkg in root.rglob('package.json')
+              if 'node_modules' not in pkg.parts
+          }
+          dirs = sorted(dir for dir in dirs if dir)
+          print(json.dumps(dirs))
+          PY
+          )
+          echo "projects=$projects" >> $GITHUB_OUTPUT
+
+  Compile:
+    needs: Discover-Projects
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project: ${{ fromJson(needs.Discover-Projects.outputs.projects) }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ${{ matrix.project }}
+
+      - name: Run TypeScript compiler
+        run: npm run build
+        working-directory: ${{ matrix.project }}
